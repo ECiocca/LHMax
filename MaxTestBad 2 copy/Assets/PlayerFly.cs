@@ -14,12 +14,14 @@ public class PlayerFly : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.Q)){
+        if (Input.GetKey(KeyCode.W)){
             impulse = 1;
         }
         else{
             impulse = 0;
         };
+
+
         this.transform.localPosition += Camera.main.transform.forward*impulse*speed;
 
         if (Input.GetKey(KeyCode.Escape)) ;{

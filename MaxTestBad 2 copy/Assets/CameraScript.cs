@@ -44,6 +44,43 @@ public class CameraScript : MonoBehaviour
         rotX = Mathf.Clamp(rotX, -30, 30);
         rotY = Mathf.Clamp(rotY, -30, 30);
 
+        const float kRotVal = 0.5F;
+
+        //do a little bit of rotation 
+        PlayerFly pf = Airplane.GetComponent<PlayerFly>();
+        if (pf != null && pf.impulse == 1)
+        {
+          
+            if (rotY > kRotVal)
+            {
+                //rotY -= kRotVal;
+                Airplane.transform.RotateAround(Airplane.transform.up, +kRotVal*Mathf.PI/180.0F);
+            }
+            if (rotY < -kRotVal)
+            {
+                //rotY += kRotVal;
+                Airplane.transform.RotateAround(Airplane.transform.up, -kRotVal * Mathf.PI / 180.0F);
+            }
+
+
+            if (rotX > kRotVal)
+            {
+                //rotX -= kRotVal;
+                Airplane.transform.RotateAround(Airplane.transform.right, +kRotVal * Mathf.PI / 180.0F);
+            }
+            if (rotX < -kRotVal)
+            {
+                //rotX += kRotVal;
+                Airplane.transform.RotateAround(Airplane.transform.right, -kRotVal * Mathf.PI / 180.0F);
+            }
+
+        }
+
+        Vector3 euler = Airplane.transform.localRotation.eulerAngles;
+        euler.z = 0;
+        //always maintain that the airplane's roll is zero
+        Airplane.transform.localRotation = Quaternion.Euler( euler); 
+
         Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
         transform.localRotation = localRotation;
 
