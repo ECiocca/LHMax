@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerFly : MonoBehaviour {
     public float speed = 1;
     public float impulse = 0;
+    public float impulseTimer = 0;
     // Use this for initialization
     void Start () {
 
@@ -14,17 +15,40 @@ public class PlayerFly : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.W)){
-            impulse = 1;
+
+        //MoveForward
+        impulseTimer += Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.W) && impulseTimer >= .05){
+            impulse += .01f;
+            impulseTimer = 0f;
         }
-        else{
-            impulse = 0;
-        };
 
+        if (Input.GetKey(KeyCode.S) && impulseTimer >= .05 && !Input.GetKey(KeyCode.W))
+        {
+            impulse -= .01f;
+            impulseTimer = 0f;
+        }
 
-        this.transform.localPosition += Camera.main.transform.forward*impulse*speed;
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && impulseTimer >= .05)
+        {
+            if(impulse > .5)
+            {
+                impulse -= .01f;
+            }
+            if (impulse < .5)
+            {
+                impulse += .0f;
+            }
+            impulseTimer = 0;
+        }
 
-        if (Input.GetKey(KeyCode.Escape)) ;{
+        impulse = Mathf.Clamp(impulse, -.1f, 1);
+
+        //this.transform.localRotation += 
+        this.transform.localPosition += this.transform.forward*impulse*speed;
+
+        if (Input.GetKey(KeyCode.Escape)){
             Cursor.lockState = CursorLockMode.None;
         }
     }
