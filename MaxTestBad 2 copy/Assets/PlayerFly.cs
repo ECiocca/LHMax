@@ -38,7 +38,7 @@ public class PlayerFly : MonoBehaviour {
             }
             if (impulse < .5)
             {
-                impulse += .0f;
+                impulse += .01f;
             }
             impulseTimer = 0;
         }
@@ -47,6 +47,7 @@ public class PlayerFly : MonoBehaviour {
 
         //this.transform.localRotation += 
         this.transform.localPosition += this.transform.forward*impulse*speed;
+        this.transform.localPosition += this.transform.up * impulse * speed;
 
         if (Input.GetKey(KeyCode.Escape)){
             Cursor.lockState = CursorLockMode.None;
