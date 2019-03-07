@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class CameraScrpit2 : MonoBehaviour
 {
-    float mouseX = Input.GetAxis("Mouse X");
-    float mouseY = -Input.GetAxis("Mouse Y");
+    float mouseX;
+    float mouseY;
     public float mouseSensitivity = 100.0f;
     public float rotY;
     public float rotX;
     public float rotZ = 0;
     float currentX;
     float currentY;
+    float currentZ;
     public GameObject airplane;
     // Start is called before the first frame update
     void Start()
@@ -50,7 +51,8 @@ public class CameraScrpit2 : MonoBehaviour
 
         currentX += rotX * Time.deltaTime;
         currentY += rotY * Time.deltaTime;
+        currentZ = 0;
 
-        airplane.transform.rotation = Quaternion.Euler(currentX, currentY, 0);
+        airplane.transform.rotation = Quaternion.Euler(currentX, currentY, currentZ);
     }
 }

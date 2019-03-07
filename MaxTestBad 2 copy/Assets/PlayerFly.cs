@@ -6,6 +6,11 @@ public class PlayerFly : MonoBehaviour {
     public float speed = 1;
     public float impulse = 0;
     public float impulseTimer = 0;
+    public bool superFast = false;
+
+    public float superFastTimer;
+    public bool superFastTimerStart;
+    public float centerImpulse = 1;
     // Use this for initialization
     void Start () {
 
@@ -16,37 +21,78 @@ public class PlayerFly : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //MoveForward
-        impulseTimer += Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.W) && impulseTimer >= .05){
-            impulse += .01f;
-            impulseTimer = 0f;
-        }
-
-        if (Input.GetKey(KeyCode.S) && impulseTimer >= .05 && !Input.GetKey(KeyCode.W))
+        //superspeed
+        if (Input.GetKey(KeyCode.Space) && superFastTimerStart == false)
         {
-            impulse -= .01f;
-            impulseTimer = 0f;
+            superFast = true;
+            superFastTimerStart = true;
+
         }
 
-        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && impulseTimer >= .05)
+        if (superFastTimerStart == true)
         {
-            if(impulse > .5)
-            {
-                impulse -= .01f;
-            }
-            if (impulse < .5)
-            {
-                impulse += .01f;
-            }
-            impulseTimer = 0;
+            superFastTimer += Time.deltaTime;
         }
 
-        impulse = Mathf.Clamp(impulse, -.1f, 1);
+        if (superFastTimer >= 2)
+        {
+            superFast = false;
+        }
 
-        //this.transform.localRotation += 
+        if(superFastTimer >= 6)
+        {
+            superFastTimer = 0;
+            superFastTimerStart = false;
+        }
+
+        //centerImpulse
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            centerImpulse = 0;
+        }
+
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            centerImpulse = 1;
+        }
+
+        if (impulse > centerImpulse)
+        {
+            impulse -= .1f*Time.deltaTime;
+        }
+
+        if (impulse < centerImpulse)
+        {
+            impulse += .1f * Time.deltaTime;
+        }
+
+        //changes gravity
+        if(impulse > .5)
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+        }
+
+        if (impulse < .5)
+        {
+            GetComponent<Rigidbody>().useGravity = true;
+        }
+
+
+        //moves plane
+        if (superFast == true)
+        {
+            impulse += 1;
+        }
+
+        //transform.forward to move forward
         this.transform.localPosition += this.transform.forward*impulse*speed;
+
+        if (superFast == true)
+        {
+            impulse -= 1;
+        }
+
+        //transform.up to allow you to look down and move up
         this.transform.localPosition += this.transform.up * impulse * speed;
 
         if (Input.GetKey(KeyCode.Escape)){
