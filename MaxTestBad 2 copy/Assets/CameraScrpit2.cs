@@ -18,8 +18,8 @@ public class CameraScrpit2 : MonoBehaviour
     {
         rotY = this.gameObject.transform.localRotation.y;
         rotX = this.gameObject.transform.localRotation.x;
-        currentX = ((airplane.transform.rotation.x + rotX * Time.deltaTime) - 0) * (180 - 0) / (1 - 0);
-        currentY = ((airplane.transform.rotation.y + rotY * Time.deltaTime) - 0) * (180 - 0) / (1 - 0);
+        currentX = 0;
+        currentY = 0;
     }
 
     // Update is called once per frame
@@ -48,9 +48,9 @@ public class CameraScrpit2 : MonoBehaviour
         Quaternion localRotation = Quaternion.Euler(rotX, rotY, rotZ);
         transform.localRotation = localRotation;
 
-        airplane.transform.rotation = Quaternion.Euler(currentX, currentY, 0);
+        currentX += rotX * Time.deltaTime;
+        currentY += rotY * Time.deltaTime;
 
-        currentX = ((airplane.transform.rotation.x + rotX * Time.deltaTime) - 0) * (180 - 0) / (1 - 0);
-        currentY = ((airplane.transform.rotation.y + rotY * Time.deltaTime) - 0) * (180 - 0) / (1 - 0);
+        airplane.transform.rotation = Quaternion.Euler(currentX, currentY, 0);
     }
 }
