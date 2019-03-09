@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChildScript : MonoBehaviour
 {
-    GameObject plane;
+    public GameObject plane;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +17,7 @@ public class ChildScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && plane.transform.position.x - this.transform.position.x <= 4 && plane.transform.position.y - this.transform.position.y <= 4 && plane.transform.position.z - this.transform.position.z <= 4)
         {
             gameObject.transform.parent = plane.gameObject.transform;
+            gameObject.transform.localPosition = new Vector3(0, 1, 0);
         }
     }
 }

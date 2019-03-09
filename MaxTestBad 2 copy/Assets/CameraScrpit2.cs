@@ -28,6 +28,7 @@ public class CameraScrpit2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         mouseX = Input.GetAxis("Mouse X");
         mouseY = -Input.GetAxis("Mouse Y");
 
