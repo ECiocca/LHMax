@@ -11,6 +11,7 @@ public class PlayerFly : MonoBehaviour {
     public float superFastTimer;
     public bool superFastTimerStart;
     public float centerImpulse = 1;
+    public GameObject Camera;
     // Use this for initialization
     void Start () {
 

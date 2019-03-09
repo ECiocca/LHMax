@@ -13,6 +13,8 @@ public class CameraScrpit2 : MonoBehaviour
     float currentX;
     float currentY;
     float currentZ;
+    public float speed = .5f;
+    public bool isAirplaneChild;
     public GameObject airplane;
     // Start is called before the first frame update
     void Start()
@@ -42,9 +44,24 @@ public class CameraScrpit2 : MonoBehaviour
             rotZ -= 1 * Time.deltaTime;
         }
 
+        if (gameObject.transform.parent == airplane.transform)
+        {
+            isAirplaneChild = true;
+        }
 
-        rotY = Mathf.Clamp(rotY, -30, 30);
-        rotX = Mathf.Clamp(rotX, -30, 30);
+        if(isAirplaneChild == true)
+        {
+            rotY = Mathf.Clamp(rotY, -30, 30);
+            rotX = Mathf.Clamp(rotX, -30, 30);
+        }
+
+        if (isAirplaneChild == false)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                this.transform.localPosition += this.transform.forward * Time.deltaTime * speed;
+            }
+        }
 
         Quaternion localRotation = Quaternion.Euler(rotX, rotY, rotZ);
         transform.localRotation = localRotation;
@@ -53,6 +70,9 @@ public class CameraScrpit2 : MonoBehaviour
         currentY += rotY * Time.deltaTime;
         currentZ = 0;
 
-        airplane.transform.rotation = Quaternion.Euler(currentX, currentY, currentZ);
+        if (isAirplaneChild == true)
+        {
+            airplane.transform.rotation = Quaternion.Euler(currentX, currentY, currentZ);
+        }
     }
 }

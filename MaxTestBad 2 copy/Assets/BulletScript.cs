@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public float impulse = 5;
+    float timePassed = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,11 @@ public class BulletScript : MonoBehaviour
     void Update()
     {
         this.transform.localPosition += this.transform.forward * impulse;
+        timePassed += Time.deltaTime;
+        if(timePassed >= 10)
+        {
+            GameObject.Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other)

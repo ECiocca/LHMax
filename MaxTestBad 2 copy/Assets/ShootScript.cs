@@ -19,7 +19,7 @@ public class ShootScript : MonoBehaviour
         {
             GameObject go = Instantiate(bullet);
             go.transform.position = bulletSpawn.transform.position;
-            go.transform.rotation = this.transform.rotation;
+            go.transform.rotation = Camera.main.transform.rotation;
         }
     }
 }
